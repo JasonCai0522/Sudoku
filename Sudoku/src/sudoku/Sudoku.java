@@ -26,14 +26,16 @@ public class Sudoku extends JFrame{
     static boolean[][] numberGiven = {{false,false,true,false,true,true,false,true,false},
                                       {true,true,false,false,false,true,false,false,false},
                                       {false,false,false,false,true,false,false,false,true},
-                                      {false,true,true,true,false,false,false,false},
+                                      {false,true,true,true,true,false,false,false,false},
                                       {false,false,true,false,false,false,true,false,false},
                                       {false,false,false,false,true,true,true,true,false},
                                       {true,false,false,false,true,false,false,false,false},
                                       {false,false,false,true,false,false,false,true,true},
                                       {false,true,false,true,true,false,true,false,false}
                             };
-            
+    
+    Button[][] buttonGrid = new Button[9][9];
+    
     public Sudoku() {
         super("Sudoku");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,8 +57,11 @@ public class Sudoku extends JFrame{
                     int buttonColumn = 3*j + l;
                     int buttonRow =  3*i + k;
                     
+                    TileClickHandler tch = new TileClickHandler(this);                  
                     Button b = new Button(buttonColumn, buttonRow);
-                    numberPanel.add(b);
+                    b.addActionListener(tch); 
+                    numberPanel.add(b); 
+                    buttonGrid[buttonColumn][buttonRow] = b;
                 }
               }
               holderPanel.add(numberPanel);

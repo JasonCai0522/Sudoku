@@ -25,11 +25,15 @@ public class Button extends JButton{
        this.setPreferredSize(dmnsn);     
        this.setBackground(Color.white);
        
-       Font font1 = new Font("SansSerif", Font.BOLD, 20);       
+       Font font1 = new Font("SansSerif", Font.BOLD, 40);       
        this.setFont(font1); 
           
        int number = Sudoku.numbers[row][column];
-       this.setText(Integer.toString(number));        
+       boolean given = Sudoku.numberGiven[row][column];
+       
+       if (given) {
+        this.setText(Integer.toString(number));
+        }
    }    
 }
 
