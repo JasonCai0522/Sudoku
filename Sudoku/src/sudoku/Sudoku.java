@@ -1,5 +1,6 @@
 package sudoku;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
@@ -36,17 +37,32 @@ public class Sudoku extends JFrame{
     
     Button[][] buttonGrid = new Button[9][9];
     
+   int userInput = -1;
+   
     public Sudoku() {
         super("Sudoku");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         GridLayout lm = new GridLayout(ROWS, COLUMNS);
-
+        GridLayout numPadlm = new GridLayout(9,1);
+        
         JPanel holderPanel = new JPanel(lm);
+        JPanel padPanel = new JPanel(numPadlm);
         Border blackLine = BorderFactory.createLineBorder(Color.black,1);
+        
         // this border looks sorta weird, might get rid of it later
-        Border redLine = BorderFactory.createLineBorder(Color.white,5);
-        holderPanel.setBorder(redLine);
+        Border whiteLine = BorderFactory.createLineBorder(Color.black,5);
+        holderPanel.setBorder(whiteLine);
+        
+        userInput = 61;
+        
+        for (int i = 1; i < 10; i ++){
+                    TileClickHandler tch = new TileClickHandler(this);                  
+                    padButton b = new padButton(i);
+                    b.addActionListener(tch); 
+                    padPanel.add(b); 
+        }
+        this.add(padPanel, BorderLayout.EAST);
         
         for (int i = 0; i < ROWS; i ++){
           for (int j = 0; j < COLUMNS; j ++){
@@ -63,10 +79,11 @@ public class Sudoku extends JFrame{
                     Button b = new Button(buttonColumn, buttonRow);
                     b.addActionListener(tch); 
                     numberPanel.add(b); 
+                    // Adds the buttons to an array so we can access them later
                     buttonGrid[buttonColumn][buttonRow] = b;
                 }
               }
-              holderPanel.add(numberPanel);
+              holderPanel.add(numberPanel, BorderLayout.NORTH);
              
           }
         }
@@ -74,45 +91,17 @@ public class Sudoku extends JFrame{
         this.pack();
     }
     
+    // getter method, check if this is necessary later
+    public int getInput() {
+        return userInput;
+    }
+    
+    public void changeValue(Button tile) {
+        tile.setDisplay(userInput);
+    }
     
     public static void main(String[] args) {
         Sudoku game = new Sudoku();
     }
     
 }
-
-//public class TicTacToe extends JFrame{
-//    // Tic Tac Toe object "is a" JFrame Object
-//    Button[][] buttonGrid;
-//    static int ROWS = 3;
-//    static int COLUMNS = 3;
-//    
-//    public TicTacToe() {
-//        // JFrame frame = new JFrame("Tic Tac Toe");
-//        super("Tic Tac Toe");
-//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.setVisible(true);
-//        
-//        GridLayout lm = new GridLayout(ROWS,COLUMNS);
-//        JPanel buttonPanel = new JPanel(lm);
-//        buttonGrid = new Button[ROWS][COLUMNS];
-//        for (int i = 0; i < ROWS; i ++){
-//          for (int j = 0; j < COLUMNS; j ++){
-//              Button b = new Button();
-//              buttonGrid[i][j] = b;
-//              buttonPanel.add(b);
-//          }
-//        }
-//        
-//        this.add(buttonPanel);
-//        this.pack();
-//    }
-//    
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String[] args) {
-//        TicTacToe game = new TicTacToe();
-//    }
-//    
-//}
