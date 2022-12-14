@@ -43,13 +43,15 @@ public class Sudoku extends JFrame{
         GridLayout lm = new GridLayout(ROWS, COLUMNS);
 
         JPanel holderPanel = new JPanel(lm);
-        
+        Border blackLine = BorderFactory.createLineBorder(Color.black,1);
+        // this border looks sorta weird, might get rid of it later
+        Border redLine = BorderFactory.createLineBorder(Color.white,5);
+        holderPanel.setBorder(redLine);
         
         for (int i = 0; i < ROWS; i ++){
           for (int j = 0; j < COLUMNS; j ++){
               // contains each 3x3 box of numbers
               JPanel numberPanel = new JPanel(lm);
-              Border blackLine = BorderFactory.createLineBorder(Color.black,1);
               numberPanel.setBorder(blackLine);
               for (int k = 0; k < ROWS; k ++){
                 for (int l = 0; l < COLUMNS; l ++){
