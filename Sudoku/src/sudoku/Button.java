@@ -12,8 +12,6 @@ import java.awt.Font;
 import javax.swing.JButton;
 //import javax.swing.JTextField;
 
-
-
 /**
  *
  * @author jason.cai
@@ -25,14 +23,16 @@ public class Button extends JButton{
    boolean isGiven;     
    
    public Button(int column,int row) {
-       Dimension dmnsn = new Dimension(100,100);
+       Dimension dmnsn = new Dimension(90,90);
        this.setPreferredSize(dmnsn);     
-       this.setBackground(Color.white);
+       this.setBackground(new java.awt.Color(234, 232, 255));
        
        Font font1 = new Font("SansSerif", Font.BOLD, 40);       
        this.setFont(font1); 
+       this.setForeground(new java.awt.Color(84, 65, 255));
        // finds what number should go in each button   
        number = Sudoku.numbers[row][column];
+       
        // finds whether or not the number is given or not
        isGiven = Sudoku.numberGiven[row][column];
        
@@ -44,11 +44,16 @@ public class Button extends JButton{
    // Sets the display value of the button
    public void setDisplay(int userValue){
        if (userValue != -1 && this.isGiven == false) {
-        displayValue = userValue;
-        this.setText(Integer.toString(displayValue));
-       }
-       
+        if (displayValue != userValue) {
+            displayValue = userValue;
+            this.setForeground(new java.awt.Color(205, 128, 255));
+            this.setText(Integer.toString(displayValue));            
+        } else {
+            displayValue = -1;
+            this.setText("");
+        }
 
+       }
    }
    
 

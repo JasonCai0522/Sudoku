@@ -16,6 +16,8 @@ public class TileClickHandler implements ActionListener{
 
     Sudoku game;
     
+    static padButton lastSelected;
+    
     public TileClickHandler(Sudoku game) {
         this.game = game;
     }
@@ -28,7 +30,17 @@ public class TileClickHandler implements ActionListener{
             game.checkWin();
         } else {
             padButton button = (padButton)ae.getSource();
-            game.userInput = button.value;     
+
+            if (game.userInput == -1) {
+                button.selected();
+                lastSelected = button;
+            } else {              
+                lastSelected.resetColor();
+                button.selected();
+                lastSelected = button;
+            }
+            
+            game.userInput = button.value;
         } 
 
 

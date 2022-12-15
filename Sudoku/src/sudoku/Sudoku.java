@@ -2,11 +2,13 @@ package sudoku;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.BreakIterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -41,6 +43,11 @@ public class Sudoku extends JFrame{
     
    int userInput = -1;
    
+   JLabel message = new JLabel();
+
+    
+   Font font1 = new Font("Verdana", Font.BOLD, 50);     
+    
     public Sudoku() {
         super("Sudoku");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,12 +57,23 @@ public class Sudoku extends JFrame{
         
         JPanel holderPanel = new JPanel(lm);
         JPanel padPanel = new JPanel(numPadlm);
+        padPanel.setBorder(BorderFactory.createMatteBorder(3, 0, 3, 3, Color.BLACK));
+
         Border blackLine = BorderFactory.createLineBorder(Color.black,1);
         
         // this border looks sorta weird, might get rid of it later
-        Border whiteLine = BorderFactory.createLineBorder(Color.black,5);
+        Border whiteLine = BorderFactory.createLineBorder(Color.black,3);
         holderPanel.setBorder(whiteLine);
         
+        JPanel title = new JPanel();
+        message = new JLabel("SUDOKU");
+        message.setFont(font1);
+        title.add(message);
+        title.setBackground(new java.awt.Color(190, 210, 255));
+        title.setBorder(BorderFactory.createMatteBorder(3, 3, 0, 3, Color.BLACK));
+        this.add(title, BorderLayout.NORTH);
+
+
         for (int i = 1; i < 10; i ++){
                     TileClickHandler tch = new TileClickHandler(this);                  
                     padButton b = new padButton(i);
@@ -83,12 +101,12 @@ public class Sudoku extends JFrame{
                     buttonGrid[buttonRow][buttonColumn] = b;
                 }
               }
-              holderPanel.add(numberPanel, BorderLayout.NORTH);
-             
+              holderPanel.add(numberPanel);    
           }
         }
-        this.add(holderPanel);
+        this.add(holderPanel,BorderLayout.CENTER);
         this.pack();
+        
     }
     
     // getter method, check if this is necessary later. Checked, idk if this is necessary
@@ -104,9 +122,6 @@ public class Sudoku extends JFrame{
         boolean win = true;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++){
-                System.out.println(win);
-                System.out.println(buttonGrid[i][j].displayValue);
-                System.out.println(numbers[i][j]);
                 if (buttonGrid[i][j].displayValue != numbers[i][j]){
                     win = false;
                     i = 10;
@@ -115,12 +130,11 @@ public class Sudoku extends JFrame{
             }
 
         }
+        
         if (win == true) {
-            System.out.println("Win");
+            message.setText("You Win");
+            message.setForeground(new java.awt.Color(121, 0, 255));
         }
-        System.out.println(win);
-
-
     }
 
     public static void main(String[] args) {
