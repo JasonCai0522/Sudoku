@@ -37,18 +37,21 @@ public class Button extends JButton{
        isGiven = Sudoku.numberGiven[row][column];
        
        if (isGiven) {
-        this.setText(Integer.toString(number));
+        displayValue = number;
+        this.setText(Integer.toString(displayValue));
       }
    } 
    // Sets the display value of the button
    public void setDisplay(int userValue){
        if (userValue != -1 && this.isGiven == false) {
-        this.setText(Integer.toString(userValue));
+        displayValue = userValue;
+        this.setText(Integer.toString(displayValue));
        }
        
-       this.displayValue = userValue;
+
    }
    
+
    
 }
 
@@ -60,6 +63,8 @@ public class Button extends JButton{
 //       Dimension dmnsn = new Dimension(100,100);
 //       this.setPreferredSize(dmnsn);
 //       this.setBackground(Color.white);
+
+
 //      
 //       JTextField textField = new JTextField(10);
 //       Font font1 = new Font("SansSerif", Font.BOLD, 20);       

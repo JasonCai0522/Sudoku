@@ -3,6 +3,8 @@ package sudoku;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.text.BreakIterator;
+
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -54,8 +56,6 @@ public class Sudoku extends JFrame{
         Border whiteLine = BorderFactory.createLineBorder(Color.black,5);
         holderPanel.setBorder(whiteLine);
         
-        userInput = 61;
-        
         for (int i = 1; i < 10; i ++){
                     TileClickHandler tch = new TileClickHandler(this);                  
                     padButton b = new padButton(i);
@@ -80,7 +80,7 @@ public class Sudoku extends JFrame{
                     b.addActionListener(tch); 
                     numberPanel.add(b); 
                     // Adds the buttons to an array so we can access them later
-                    buttonGrid[buttonColumn][buttonRow] = b;
+                    buttonGrid[buttonRow][buttonColumn] = b;
                 }
               }
               holderPanel.add(numberPanel, BorderLayout.NORTH);
@@ -91,15 +91,38 @@ public class Sudoku extends JFrame{
         this.pack();
     }
     
-    // getter method, check if this is necessary later
+    // getter method, check if this is necessary later. Checked, idk if this is necessary
     public int getInput() {
         return userInput;
     }
-    
+
     public void changeValue(Button tile) {
         tile.setDisplay(userInput);
     }
     
+    public void checkWin() {
+        boolean win = true;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++){
+                System.out.println(win);
+                System.out.println(buttonGrid[i][j].displayValue);
+                System.out.println(numbers[i][j]);
+                if (buttonGrid[i][j].displayValue != numbers[i][j]){
+                    win = false;
+                    i = 10;
+                    j = 10;
+                }
+            }
+
+        }
+        if (win == true) {
+            System.out.println("Win");
+        }
+        System.out.println(win);
+
+
+    }
+
     public static void main(String[] args) {
         Sudoku game = new Sudoku();
     }

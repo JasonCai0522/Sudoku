@@ -16,6 +16,8 @@ import javax.swing.JButton;
  */
 public class padButton extends JButton{
     
+    int value;
+
     public padButton(int number){
        Dimension dmnsn = new Dimension(100,100);
        this.setPreferredSize(dmnsn);     
@@ -24,6 +26,8 @@ public class padButton extends JButton{
        Font font1 = new Font("SansSerif", Font.BOLD, 40);       
        this.setFont(font1); 
        
+       value = number;
+
        this.setText(Integer.toString(number));
     }
 }
