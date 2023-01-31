@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.text.BreakIterator;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -16,7 +16,8 @@ import javax.swing.border.Border;
 public class Sudoku extends JFrame{
     static int ROWS = 3;
     static int COLUMNS = 3;
-  
+ 
+    
     static int[][] numbers ={{8,4,2,9,5,6,3,1,7},
                             {5,9,1,8,3,7,6,4,2},
                             {6,7,3,2,4,1,8,5,9},
@@ -52,42 +53,63 @@ public class Sudoku extends JFrame{
         super("Sudoku");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-        GridLayout lm = new GridLayout(ROWS, COLUMNS);
-        GridLayout numPadlm = new GridLayout(9,1);
-        
-        JPanel holderPanel = new JPanel(lm);
-        JPanel padPanel = new JPanel(numPadlm);
-        padPanel.setBorder(BorderFactory.createMatteBorder(3, 0, 3, 3, Color.BLACK));
 
+        // Creating layouts
+        GridLayout gridlm = new GridLayout(ROWS, COLUMNS);
+        GridLayout numPadlm = new GridLayout(3,3);
+        
+        // Creating Panels
+        JPanel holderPanel = new JPanel();
+        JPanel gridPanel = new JPanel(gridlm);        
+        JPanel padPanel = new JPanel();
+        JPanel numberPadPanel = new JPanel(numPadlm);
+        
+
+
+        // Setting background color
+        holderPanel.setBackground(new java.awt.Color(239, 224, 255));
+
+
+        // Creating Borders and setting borders
         Border blackLine = BorderFactory.createLineBorder(Color.black,1);
+        Border thickBlackLine = BorderFactory.createLineBorder(Color.black,3);
+        holderPanel.setBorder(thickBlackLine);
+        numberPadPanel.setBorder(thickBlackLine);
+        gridPanel.setBorder(thickBlackLine);
         
-        // this border looks sorta weird, might get rid of it later
-        Border whiteLine = BorderFactory.createLineBorder(Color.black,3);
-        holderPanel.setBorder(whiteLine);
-        
+        // Creating and adjusting the title 
         JPanel title = new JPanel();
         message = new JLabel("SUDOKU");
         message.setFont(font1);
         title.add(message);
         title.setBackground(new java.awt.Color(190, 210, 255));
         title.setBorder(BorderFactory.createMatteBorder(3, 3, 0, 3, Color.BLACK));
-        this.add(title, BorderLayout.NORTH);
 
 
+        // Adds all the buttons to the padbutton jpanel
         for (int i = 1; i < 10; i ++){
+                    // Creats a tile click handler
                     TileClickHandler tch = new TileClickHandler(this);                  
+                    
+                    // Creates the padbutton
                     padButton b = new padButton(i);
                     b.addActionListener(tch); 
-                    padPanel.add(b); 
+                    
+                    // Adds the button to the number pad panel 
+                    numberPadPanel.add(b); 
         }
-        this.add(padPanel, BorderLayout.EAST);
         
+        
+        // The rows for the 3x3 boxes
         for (int i = 0; i < ROWS; i ++){
-          for (int j = 0; j < COLUMNS; j ++){
+            // the columns in the 3x3 boxes
+            for (int j = 0; j < COLUMNS; j ++){
               // contains each 3x3 box of numbers
-              JPanel numberPanel = new JPanel(lm);
+              JPanel numberPanel = new JPanel(gridlm);
               numberPanel.setBorder(blackLine);
+              
               for (int k = 0; k < ROWS; k ++){
+                
                 for (int l = 0; l < COLUMNS; l ++){
                     // Finding the number
                     int buttonColumn = 3*j + l;
@@ -101,23 +123,34 @@ public class Sudoku extends JFrame{
                     buttonGrid[buttonRow][buttonColumn] = b;
                 }
               }
-              holderPanel.add(numberPanel);    
+              gridPanel.add(numberPanel);    
           }
         }
-        this.add(holderPanel,BorderLayout.CENTER);
+        
+        // Adds all the panels to the frame
+        padPanel.add(numberPadPanel, BorderLayout.CENTER);
+        holderPanel.add(gridPanel,BorderLayout.CENTER);
+        holderPanel.add(padPanel, BorderLayout.EAST);     
+        this.add(holderPanel);   
+        this.add(title, BorderLayout.NORTH);
         this.pack();
         
     }
     
-    // getter method, check if this is necessary later. Checked, idk if this is necessary
-    public int getInput() {
+    // Gets the inputs from other files
+    public int getUserInput() {
         return userInput;
     }
 
-    public void changeValue(Button tile) {
+    public void setUserInput(Button tile) {
         tile.setDisplay(userInput);
     }
     
+    public void setButtonValue(Button tile) {
+        tile.setDisplay(userInput);
+    }
+
+
     public void checkWin() {
         boolean win = true;
         for (int i = 0; i < 9; i++) {
