@@ -1,22 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sudoku;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
+ * This is the Tile Click Handler. It handles what happens when buttons are clicked on
  * @author jason.cai
  */
 public class TileClickHandler implements ActionListener{
 
-    Sudoku game;
+    private Sudoku game;
     
-    static padButton lastSelected;
+    private static padButton lastSelected;
+
+    private static boolean firstMove = true; 
     
     public TileClickHandler(Sudoku game) {
         this.game = game;
@@ -26,25 +23,25 @@ public class TileClickHandler implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() instanceof Button) {
             Button button = (Button)ae.getSource();
-            game.setUserInput(button);
+            game.setDisplay(game.getUserInput(), button);
             game.checkWin();
+        
         } else {
+         
             padButton button = (padButton)ae.getSource();
 
-            if (game.userInput == -1) {
+            if (firstMove == true) {
                 button.selected();
                 lastSelected = button;
+                firstMove = false;
+         
             } else {              
                 lastSelected.resetColor();
                 button.selected();
                 lastSelected = button;
             }
-            
-            game.userInput = button.value;
-        } 
-
-
-        
+            game.setUserInput(button.getValue());
+        }  
     }
-    
+
 }
