@@ -241,7 +241,7 @@ public class Sudoku extends JFrame{
 
     /**
     * Main method. Runs the Sudoku game.
-    * @param args
+    * @param args Unused
     */
     public static void main(String[] args) {
         Sudoku game = new Sudoku();
